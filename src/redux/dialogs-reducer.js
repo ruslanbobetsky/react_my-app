@@ -28,8 +28,8 @@ const dialogsReducer = (state = initialState, action) => {
    }
    else if (action.type === SEND_MESSAGE) {
       let body = state.newMessageBody;
-      state.newMessageBody = '';
       state.messages.push({ id: 6, message: body });
+      state.newMessageBody = '';
    }
 
    return state;
