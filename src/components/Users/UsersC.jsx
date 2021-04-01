@@ -9,18 +9,17 @@ class Users extends React.Component {
       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
          .then(response => {
             this.props.setUser(response.data.items)
+            this.props.setTotalUsersCount(response.data.totalCount)
          })
-
-      onPageChanged = (pageNuber) => {
-         this.props.setCurrentPage(pageNuber)
+   }
+      onPageChanged = (pageNumber) => {
+         this.props.setCurrentPage(pageNumber)
          axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
                this.props.setUser(response.data.items)
-               this.props.setTotalUsersCount(response.data.totalCount)
             })
       }
-   }
-
+   
    render() {
       let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
       let pages = [];
@@ -41,7 +40,7 @@ class Users extends React.Component {
             this.props.users.map(u => <div key={u.id}>
                <span>
                   <div>
-                     <img src={userPhoto} className={s.user_photo} />
+                     <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.user_photo} />
                   </div>
                </span>
                <span>
